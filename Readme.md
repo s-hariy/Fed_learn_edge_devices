@@ -126,6 +126,6 @@ python server.py --rounds 3 --min_num_clients 2 --sample_fraction 1.0
 
 ```bash
 # Run the default FedISIC dataset
-python3 client_<FRAMEWORK>.py --cid=<CLIENT_ID> --server_address=<SERVER_ADDRESS>
+python3 client.py --cid=<CLIENT_ID> --server_address=<SERVER_ADDRESS>
 
 ```

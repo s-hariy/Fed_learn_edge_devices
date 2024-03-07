@@ -32,7 +32,7 @@ sudo apt-get libopenblas-dev;
 ```
 export TORCH_INSTALL=https://developer.download.nvidia.cn/compute/redist/jp/v511/pytorch/torch-2.0.0+nv23.05-cp38-cp38-linux_aarch64.whl
 ```
-`v511` is the jetpack version 5.1.1
+`v511` is the jetpack version 5.1.1. Note we can install 5.1.1 version pytorch for 5.1.2 without any adverse effects, vice versa not possible.
 
 6. Install Pytorch.
 ```
@@ -122,6 +122,28 @@ sudo ufw allow 8080/tcp
 # The command below will sample all clients connected (since sample_fraction=1.0)
 python server.py --rounds 3 --min_num_clients 2 --sample_fraction 1.0
 ```
+Example:
+```bash
+(flwr) srihari@fmlpc:~/git/embedded-devices$ python3 server.py -h
+usage: server.py [-h] [--server_address SERVER_ADDRESS] [--rounds ROUNDS]
+                 [--sample_fraction SAMPLE_FRACTION]
+                 [--min_num_clients MIN_NUM_CLIENTS]
+
+Embedded devices
+
+options:
+  -h, --help            show this help message and exit
+  --server_address SERVER_ADDRESS
+                        gRPC server address (deafault '0.0.0.0:8080')
+  --rounds ROUNDS       Number of rounds of federated learning (default: 5)
+  --sample_fraction SAMPLE_FRACTION
+                        Fraction of available clients used for fit/evaluate
+                        (default: 1.0)
+  --min_num_clients MIN_NUM_CLIENTS
+                        Minimum number of available clients required for
+                        sampling (default: 2)
+
+```
 ## Client (any device)
 
 ```bash
@@ -129,3 +151,29 @@ python server.py --rounds 3 --min_num_clients 2 --sample_fraction 1.0
 python3 client.py --cid=<CLIENT_ID> --server_address=<SERVER_ADDRESS>
 
 ```
+Example:
+```bash
+(flwr) srihari@fmlpc:~/git/embedded-devices$ python3 client.py -h
+usage: client.py [-h] [--server_address SERVER_ADDRESS] --cid CID
+                 [--data_path DATA_PATH]
+
+Embedded devices
+
+options:
+  -h, --help            show this help message and exit
+  --server_address SERVER_ADDRESS
+                        gRPC server address (default '0.0.0.0:8080')
+  --cid CID             Client id. Should be an integer between 0 and
+                        NUM_CLIENTS
+  --data_path DATA_PATH
+                        absolute path to data
+
+```
+
+Default centres: 
+```
+    centers = [1,2] if args.cid == 0 else [3,4] if args.cid == 1 else [0,5]
+```
+Modify Line 158 in client.py to set custom centers. Note there are totally 6 centers (0 to 5).
+
+NUM_CLIENTS default value: 50. Change this if the clients exceed 50 otherwise retain this value.

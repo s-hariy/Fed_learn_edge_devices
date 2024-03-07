@@ -18,7 +18,7 @@ parser = argparse.ArgumentParser(description="Embedded devices")
 parser.add_argument(
     "--server_address",
     type=str,
-    default="10.21.3.10:8080",
+    default="0.0.0.0:8080",
     help=f"gRPC server address (default '0.0.0.0:8080')",
 )
 parser.add_argument(

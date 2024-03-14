@@ -186,7 +186,7 @@ class FedIsic2019(Isic2019Raw):
         if not self.pooled:
             assert center in range(6)
             #df2 = df.query("fold2 == '" + self.key + "' ").reset_index(drop=True)
-            df2 = df[df['center'].isin(centers_) & (df['fold'] == self.train_test)]
+            df2 = df[df['center'].isin(centers_) & (df['fold'] == self.train_test)].reset_index(drop=True)
 
         images = df2.image.tolist()
         self.image_paths = [

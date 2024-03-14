@@ -64,7 +64,7 @@ def train(net, trainloader, optimizer, epochs, device):
     criterion = torch.nn.CrossEntropyLoss()
     for _ in range(epochs):
         for batch in tqdm(trainloader):
-            batch = list(batch.values())
+            batch = list(batch)
             images, labels = batch[0], batch[1]
             optimizer.zero_grad()
             criterion(net(images.to(device)), labels.to(device)).backward()
@@ -77,7 +77,7 @@ def test(net, testloader, device):
     correct, loss = 0, 0.0
     with torch.no_grad():
         for batch in tqdm(testloader):
-            batch = list(batch.values())
+            batch = list(batch)
             images, labels = batch[0], batch[1]
             outputs = net(images.to(device))
             labels = labels.to(device)
